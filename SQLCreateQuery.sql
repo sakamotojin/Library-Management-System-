@@ -18,9 +18,9 @@ begin ;
 create table LibraryManagementSystem.BookInfo
 (
 [BookId] int not null identity(1,1), 
-[Name] varchar(30) not null,
-[Author] varchar(50) not null,
-[Description] varchar(50) not null,
+[Name] varchar(60) not null,
+[Author] varchar(60) not null,
+[Description] varchar(100) not null,
 [ISBN] bigint not null unique ,
 [BasePrice] decimal(10,2) not null,
 [PricePerDay] decimal(10,2) not null,
@@ -73,7 +73,6 @@ go
 --BookAnalyticsTable
 
 --TODO Non Clustered Index on TotalIssues and  Rating and Money 
---TODO constriants matching with book readhistory__ rating 
 
 if not exists ( Select * FROM I0001425.INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = N'LibraryManagementSystem'  AND TABLE_NAME = N'BookAnalytics')
 begin ;
@@ -100,7 +99,7 @@ create table LibraryManagementSystem.BookReadHistory
 [UserId] int not null,
 [BookId] int not null, 
 [IssueDate] date not null,
-[Rating] int default 3,
+[Rating] int null,
 constraint PkBookReadHistory primary key ([UserId], [BookId]),
 constraint FkBookReadHistory_uid foreign key (UserId) references LibraryManagementSystem.UserInfo ([UserId]),
 constraint FkBookReadHistory_bid foreign key (BookId) references LibraryManagementSystem.BookInfo ([BookId])
